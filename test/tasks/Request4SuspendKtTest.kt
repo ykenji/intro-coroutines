@@ -4,16 +4,18 @@ import contributors.MockGithubService
 import contributors.expectedResults
 import contributors.testRequestData
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.currentTime
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
 
 class Request4SuspendKtTest {
     @Test
-    fun testSuspend() = runBlocking {
-        val startTime = System.currentTimeMillis()
+    fun testSuspend() = runTest {
+        val startTime = currentTime
         val result = loadContributorsSuspend(MockGithubService, testRequestData)
         Assert.assertEquals("Wrong result for 'loadContributorsSuspend'", expectedResults.users, result)
-        val totalTime = System.currentTimeMillis() - startTime
+        val totalTime = currentTime - startTime
         /*
         // TODO: uncomment this assertion
         Assert.assertEquals(
